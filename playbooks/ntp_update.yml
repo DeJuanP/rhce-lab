@@ -1,0 +1,12 @@
+---
+- name: Update NTP servers 
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Fill the blank line after a specific header
+    ansible.builtin.lineinfile:
+      path: /etc/chrony.conf
+      regex: '^server _gateway iburst'
+      line: 'time.cloudflare.com iburst'
+      
