@@ -7,6 +7,11 @@
   - name: Fill the blank line after a specific header
     ansible.builtin.lineinfile:
       path: /etc/chrony.conf
-      regex: '^server _gateway iburst'
-      line: 'time.cloudflare.com iburst'
+      regex: '^time.cloudflare.com iburst'
+      line: 'pool 2.pool.ntp.org iburst'
+
+  - name: Restart chronyd service
+    service:
+      name: chronyd
+      state: restarted
       
