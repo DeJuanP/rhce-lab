@@ -1,0 +1,30 @@
+---
+- name: Create privilege user and add ssh keys
+  hosts: all
+  become: true
+
+  tasks:
+  - name: create user and generate ssh key
+    user:
+      name: steve
+      group: root
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
+
+      
+  - name: add ssh keys for user
+    authorized_key:
+      user: steve
+      key: file:///home/steve/.ssh/id_rsa.pub
+
+  - name: add user to sudo list
+    copy:
+      src: /home/ansible/sudoer_steve
+      dest: /etc/sudoers.d/steve
+      owner: root
+      group: root
+
+
+
+
