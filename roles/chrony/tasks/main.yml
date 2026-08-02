@@ -1,0 +1,13 @@
+- name: Update Chronyd service
+  dnf:
+    name: chrony
+    state: latest
+
+
+- name: Update NTP servers
+  lineinfile:
+    path: /etc/chrony.conf
+    regex: '*iburst'
+    line: 'pool 2.pool.ntp.org iburst'
+  notify: Restart Chronyd service
+
