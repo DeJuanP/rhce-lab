@@ -1,0 +1,13 @@
+---
+# tasks file for selinux
+- name: Enable SELinux
+  ansible.posix.selinux:
+    policy: targeted
+    state: enforcing
+
+- name: Allow apache to modify files in /srv/git_repos
+  community.general.sefcontext:
+    target: '/srv/git_repos(/.*)?'
+    setype: httpd_sys_content_t
+    state: present
+
